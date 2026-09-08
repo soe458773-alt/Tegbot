@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Watch & Earn - Telegram Mini App</title>
+    <!-- Telegram Web App JS SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #0f172a);
+            --text-color: var(--tg-theme-text-color, #ffffff);
+            --card-bg: var(--tg-theme-secondary-bg-color, #1e293b);
+            --button-color: var(--tg-theme-button-color, #2563eb);
+            --button-text: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background-color: var(--button-color);
+            color: var(--button-text);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .btn:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Video Player Styling */
+        #video-container {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        #timer-box {
+            font-size: 18px;
+            font-weight: bold;
+            color: #facc15;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="step-1">
+            <h2>ဗီဒီယိုကြည့်ရန်</h2>
+            <p>ဗီဒီယိုကို စတင်ကြည့်ရှုရန် အောက်ပါကြော်ငြာလင့်ခ်ကို နှိပ်ပြီး စက္ကန့်အနည်းငယ် စောင့်ဆိုင်းပေးပါ။</p>
+            
+            <!-- ထည့်ပေးလိုက်သည့် Ads Link -->
+            <a href="https://www.profitableratecpmnetwork.com/ket1i5d7eg?key=4fd15bb6bdffdc535b455feca70aab53" target="_blank" id="ad-btn" class="btn">ကြော်ငြာကြည့်ရန် (Click Here)</a>
+            
+            <button id="start-timer-btn" class="btn" style="background-color: #10b981;" disabled>ကြော်ငြာကြည့်ပြီးပါက နှိပ်ပါ</button>
+            
+            <div id="timer-box" class="hidden">ကျန်ရှိချိန်: <span id="countdown">15</span> စက္ကန့်</div>
+        </div>
+
+        <div id="step-2" class="hidden">
+            <h2>ဗီဒီယို စတင်ပါပြီ</h2>
+            <div id="video-container">
+                <video id="main-video" controls autoplay>
+                    <source id="video-source" src="" type="video/mp4">
+                    သင်၏ ဘရောက်ဆာသည် ဗီဒီယိုကို မထောက်ပံ့ပါ။
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const adBtn = document.getElementById('ad-btn');
+        const startTimerBtn = document.getElementById('start-timer-btn');
+        const timerBox = document.getElementById('timer-box');
+        const countdownSpan = document.getElementById('countdown');
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const videoSource = document.getElementById('video-source');
+        const mainVideo = document.getElementById('main-video');
+
+        let adClicked = false;
+
+        // URL ထဲက Parameter (ဥပမာ ?v=VIDEO_URL) ကနေ ဗီဒီယိုလင့်ခ်ကို ဖမ်းယူခြင်း
+        const urlParams = new URLSearchParams(window.location.search);
+        let videoUrl = urlParams.get('v');
+
+        if (videoUrl) {
+            videoSource.src = decodeURIComponent(videoUrl);
+        } else {
+            // Test လုပ်ဖို့ Default ဗီဒီယိုလင့်ခ်တစ်ခု
+            videoSource.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+        }
+
+        // User က ကြော်ငြာခလုတ်ကို နှိပ်လိုက်တဲ့အခါ
+        adBtn.addEventListener('click', function() {
+            adClicked = true;
+            setTimeout(() => {
+                startTimerBtn.removeAttribute('disabled');
+            }, 1000);
+        });
+
+        // ကြော်ငြာကြည့်ပြီးလို့ Timer စတင်မည့် ခလုတ်ကို နှိပ်တဲ့အခါ
+        startTimerBtn.addEventListener('click', function() {
+            if (!adClicked) {
+                alert('ကျေးဇူးပြု၍ ကြော်ငြာကို အရင်နှိပ်ပါ။');
+                return;
+            }
+
+            startTimerBtn.classList.add('hidden');
+            adBtn.classList.add('hidden');
+            timerBox.classList.remove('hidden');
+
+            let timeLeft = 15; // လိုချင်သည့် စက္ကန့်အရေအတွက်
+            
+            let timer = setInterval(function() {
+                timeLeft--;
+                countdownSpan.innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    step1.classList.add('hidden');
+                    step2.classList.remove('hidden');
+                    mainVideo.load();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
