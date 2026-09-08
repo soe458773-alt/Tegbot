@@ -80,7 +80,6 @@
             display: none !important;
         }
 
-        /* Video Player Styling */
         #video-container {
             width: 100%;
             margin-top: 15px;
@@ -107,7 +106,6 @@
             <h2>ဗီဒီယိုကြည့်ရန်</h2>
             <p>ဗီဒီယိုကို စတင်ကြည့်ရှုရန် အောက်ပါကြော်ငြာလင့်ခ်ကို နှိပ်ပြီး စက္ကန့်အနည်းငယ် စောင့်ဆိုင်းပေးပါ။</p>
             
-            <!-- ထည့်ပေးလိုက်သည့် Ads Link -->
             <a href="https://www.profitableratecpmnetwork.com/ket1i5d7eg?key=4fd15bb6bdffdc535b455feca70aab53" target="_blank" id="ad-btn" class="btn">ကြော်ငြာကြည့်ရန် (Click Here)</a>
             
             <button id="start-timer-btn" class="btn" style="background-color: #10b981;" disabled>ကြော်ငြာကြည့်ပြီးပါက နှိပ်ပါ</button>
@@ -141,18 +139,15 @@
 
         let adClicked = false;
 
-        // URL ထဲက Parameter (ဥပမာ ?v=VIDEO_URL) ကနေ ဗီဒီယိုလင့်ခ်ကို ဖမ်းယူခြင်း
         const urlParams = new URLSearchParams(window.location.search);
         let videoUrl = urlParams.get('v');
 
         if (videoUrl) {
             videoSource.src = decodeURIComponent(videoUrl);
         } else {
-            // Test လုပ်ဖို့ Default ဗီဒီယိုလင့်ခ်တစ်ခု
             videoSource.src = "https://www.w3schools.com/html/mov_bbb.mp4";
         }
 
-        // User က ကြော်ငြာခလုတ်ကို နှိပ်လိုက်တဲ့အခါ
         adBtn.addEventListener('click', function() {
             adClicked = true;
             setTimeout(() => {
@@ -160,7 +155,6 @@
             }, 1000);
         });
 
-        // ကြော်ငြာကြည့်ပြီးလို့ Timer စတင်မည့် ခလုတ်ကို နှိပ်တဲ့အခါ
         startTimerBtn.addEventListener('click', function() {
             if (!adClicked) {
                 alert('ကျေးဇူးပြု၍ ကြော်ငြာကို အရင်နှိပ်ပါ။');
@@ -171,7 +165,7 @@
             adBtn.classList.add('hidden');
             timerBox.classList.remove('hidden');
 
-            let timeLeft = 15; // လိုချင်သည့် စက္ကန့်အရေအတွက်
+            let timeLeft = 15;
             
             let timer = setInterval(function() {
                 timeLeft--;
