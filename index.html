@@ -1,101 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Video - Watch Ad to View</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #111; 
-            color: #fff; 
-            text-align: center; 
-            padding: 20px; 
-            margin: 0;
-        }
-        #ad-section { 
-            margin-top: 40px; 
-            background: #1e1e1e; 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        #video-section { 
-            display: none; 
-            margin-top: 20px; 
-        }
-        .btn { 
-            background: #0088cc; 
-            color: white; 
-            border: none; 
-            padding: 14px 24px; 
-            font-size: 16px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            display: inline-block; 
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .btn:hover { background: #0077b3; }
-        #timer { color: #ffcc00; font-weight: bold; font-size: 18px; margin-top: 10px; }
-        video { width: 100%; max-height: 400px; border-radius: 8px; background: #000; }
+        body { font-family: Arial, sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; }
+        video { width: 100%; max-width: 500px; border-radius: 8px; margin-top: 15px; display: none; }
+        #ad-container { margin: 20px 0; }
+        .btn { background: #ff4757; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- ကြော်ငြာပြမည့် အပိုင်း -->
-    <div id="ad-section">
-        <h3>📢 ဗီဒီယိုကြည့်ရှုရန် ကြော်ငြာကို အရင်ကြည့်ပါ</h3>
-        <p>ကျေးဇူးပြု၍ အောက်ပါ ကြော်ငြာလင့်ခ်ကို နှိပ်ပြီး ခဏစောင့်ပါ (သို့) ကြော်ငြာပြီးဆုံးပါက ဗီဒီယို အလိုအလျောက် ပွင့်လာပါမည်။</p>
-        
-        <!-- သင့်ရဲ့ Ad Link -->
-        <a href="https://www.profitableratecpmnetwork.com/ket1i5d7eg?key=4fd15bb6bdffdc535b455feca70aab53" target="_blank" id="ad-link" class="btn" onclick="startUnlockTimer()">ကြော်ငြာကြည့်မည် (Click Here)</a>
-        
-        <div id="timer" style="display: none;">ကျေးဇူးပြု၍ <span>5</span> စက္ကန့် စောင့်ပါ...</div>
+    <h2>🎬 တင်ထားသော ဗီဒီယို</h2>
+
+    <div id="ad-container">
+        <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါကြော်ငြာလင့်ခ်ကို နှိပ်ပြီး ပြီးဆုံးအောင် ကြည့်ပါ</p>
+        <!-- Ad Network Direct Link ကို ဤနေရာတွင် ထည့်ပါ -->
+        <a href="https://www.profitableratecpmnetwork.com/ket1i5d7?key=4fd15bb6bdffdc535b455feca70aab53" target="_blank" onclick="unlockVideo()" class="btn">🔗 ကြော်ငြာဖွင့်ရန်နှိပ်ပါ</a>
     </div>
 
-    <!-- ဗီဒီယိုပြမည့် အပိုင်း (ကြော်ငြာကြည့်ပြီးမှ ပေါ်မည်) -->
-    <div id="video-section">
-        <h3>🎬 သင် တောင်းဆိုထားသော ဗီဒီယို</h3>
-        <div id="player-container">
-            <video id="video-player" controls autoplay>
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
+    <!-- ဗီဒီယိုပြမည့် Player -->
+    <video id="videoPlayer" controls>
+        Your browser does not support the video tag.
+    </video>
 
     <script>
+        // URL ထဲပါလာတဲ့ file_id သို့မဟုတ် video parameter ကို ဖမ်းယူရန်
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('v'); // Telegram က ပို့ပေးမယ့် ဗီဒီယိုဖိုင် လင့်ခ် (သို့မဟုတ် File ID)
-
-        function startUnlockTimer() {
-            const timerDiv = document.getElementById('timer');
-            const timerSpan = timerDiv.querySelector('span');
-            timerDiv.style.display = 'block';
-            
-            let timeLeft = 5; // ၅ စက္ကန့် စောင့်ပြီး ဗီဒီယိုပွင့်မည်
-            
-            let countdown = setInterval(() => {
-                timeLeft--;
-                timerSpan.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(countdown);
-                    unlockVideo();
-                }
-            }, 1000);
-        }
+        const videoId = urlParams.get('v');
 
         function unlockVideo() {
-            document.getElementById('ad-section').style.display = 'none';
-            document.getElementById('video-section').style.display = 'block';
+            // ကြော်ငြာလင့်ခ်ကို နှိပ်ပြီးပါက ဗီဒီယိုကို ပေါ်လာစေရန်
+            const videoElem = document.getElementById('videoPlayer');
             
-            if (videoUrl) {
-                const player = document.getElementById('video-player');
-                player.src = decodeURIComponent(videoUrl);
+            if (videoId) {
+                // Telegram file_id ကို Telegram Bot API ဖြင့် တိုက်ရိုက်ချိတ်ဆက်ရန် သို့မဟုတ် Direct URL ဖော်ရန်
+                // (မှတ်ချက် - Telegram Bot API ပေါ်မူတည်၍ file_id ဖြင့် တိုက်ရိုက် στင့်ရန် proxy လိုအပ်ပါက ဤနေရာတွင် ချိတ်ပါ)
+                videoElem.style.display = 'block';
+                // ဥပမာအနေဖြင့် file_id ကို Telegram File Endpoint သို့ ချိတ်ဆက်ပေးခြင်း
+                // ဗီဒီယိုဖိုင်လင့်ခ် မှန်ကန်စွာ ပေါ်လာစေရန်
+                videoElem.src = `https://api.telegram.org/file/bot8978883239:AAEBtMTe9loK0tCf_ikGgnzMwJssm-FJUyk/${videoId}`;
             } else {
-                document.getElementById('player-container').innerHTML = '<p style="color: red;">ဗီဒီယို လင့်ခ် မရှိပါ။</p>';
+                alert('ဗီဒီယို အချက်အလက် မတွေ့ရှိပါ။');
             }
         }
     </script>
