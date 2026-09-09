@@ -6,44 +6,47 @@
     <title>Smile Video - Watch Ad to View</title>
     <style>
         body { font-family: Arial, sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; }
-        video { width: 100%; max-width: 500px; border-radius: 8px; margin-top: 15px; display: none; }
-        #ad-container { margin: 20px 0; }
-        .btn { background: #ff4757; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
+        .video-box { display: none; margin-top: 20px; }
+        video { width: 100%; max-width: 500px; border-radius: 8px; }
+        .btn { background: #ff4757; color: white; border: none; padding: 14px 24px; font-size: 16px; border-radius: 5px; cursor: pointer; display: inline-block; font-weight: bold; }
+        .unlock-note { color: #2ed573; margin-top: 15px; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <h2>🎬 တင်ထားသော ဗီဒီယို</h2>
+    <h2>🎬 Smile Video Player</h2>
+    <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ</p>
 
-    <div id="ad-container">
-        <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါကြော်ငြာလင့်ခ်ကို နှိပ်ပြီး ပြီးဆုံးအောင် ကြည့်ပါ</p>
-        <!-- Ad Network Direct Link ကို ဤနေရာတွင် ထည့်ပါ -->
-        <a href="https://www.profitableratecpmnetwork.com/ket1i5d7?key=4fd15bb6bdffdc535b455feca70aab53" target="_blank" onclick="unlockVideo()" class="btn">🔗 ကြော်ငြာဖွင့်ရန်နှိပ်ပါ</a>
+    <div style="margin: 30px 0;">
+        <button onclick="openAdAndUnlock()" class="btn">🔗 ကြော်ငြာဖွင့်ရန် နှိပ်ပါ</button>
     </div>
 
-    <!-- ဗီဒီယိုပြမည့် Player -->
-    <video id="videoPlayer" controls>
-        Your browser does not support the video tag.
-    </video>
+    <div id="videoBox" class="video-box">
+        <p class="unlock-note">✅ ကြော်ငြာဖွင့်ပြီးပါပြီ။ အောက်တွင် ဗီဒီယိုကို ကြည့်ရှုနိုင်ပါပြီ။</p>
+        <video id="videoPlayer" controls autoplay>
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
     <script>
-        // URL ထဲပါလာတဲ့ file_id သို့မဟုတ် video parameter ကို ဖမ်းယူရန်
         const urlParams = new URLSearchParams(window.location.search);
-        const videoId = urlParams.get('v');
+        const videoUrl = urlParams.get('v');
 
-        function unlockVideo() {
-            // ကြော်ငြာလင့်ခ်ကို နှိပ်ပြီးပါက ဗီဒီယိုကို ပေါ်လာစေရန်
-            const videoElem = document.getElementById('videoPlayer');
-            
-            if (videoId) {
-                // Telegram file_id ကို Telegram Bot API ဖြင့် တိုက်ရိုက်ချိတ်ဆက်ရန် သို့မဟုတ် Direct URL ဖော်ရန်
-                // (မှတ်ချက် - Telegram Bot API ပေါ်မူတည်၍ file_id ဖြင့် တိုက်ရိုက် στင့်ရန် proxy လိုအပ်ပါက ဤနေရာတွင် ချိတ်ပါ)
-                videoElem.style.display = 'block';
-                // ဥပမာအနေဖြင့် file_id ကို Telegram File Endpoint သို့ ချိတ်ဆက်ပေးခြင်း
-                // ဗီဒီယိုဖိုင်လင့်ခ် မှန်ကန်စွာ ပေါ်လာစေရန်
-                videoElem.src = `https://api.telegram.org/file/bot8978883239:AAEBtMTe9loK0tCf_ikGgnzMwJssm-FJUyk/${videoId}`;
+        function openAdAndUnlock() {
+            // ကြော်ငြာလင့်ခ်ကို အသစ်ဖွင့်ရန်
+            const adUrl = "https://www.profitableratecpmnetwork.com/ket1i5d7?key=4fd15bb6bdffdc535b455feca70aab53";
+            window.open(adUrl, '_blank');
+
+            // ဗီဒီယို Player ကို ပေါ်လာစေရန်
+            const videoBox = document.getElementById('videoBox');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            if (videoUrl) {
+                videoBox.style.display = 'block';
+                videoPlayer.src = videoUrl;
             } else {
-                alert('ဗီဒီယို အချက်အလက် မတွေ့ရှိပါ။');
+                videoBox.style.display = 'block';
+                alert('ဗီဒီယို လင့်ခ် အချက်အလက် မရှိပါ။');
             }
         }
     </script>
