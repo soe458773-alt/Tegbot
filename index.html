@@ -9,27 +9,34 @@
         .video-box { display: none; margin-top: 20px; }
         video { width: 100%; max-width: 500px; border-radius: 8px; }
         .btn { background: #ff4757; color: white; border: none; padding: 14px 24px; font-size: 16px; border-radius: 5px; cursor: pointer; display: inline-block; font-weight: bold; }
-        .btn:disabled { background: #555; cursor: not-allowed; }
         .unlock-note { color: #2ed573; margin-top: 15px; font-size: 14px; }
         #timer-text { font-size: 18px; color: #ffa502; margin: 15px 0; font-weight: bold; }
+        .video-title { font-size: 18px; color: #ff4757; margin-bottom: 15px; font-weight: bold; }
+        #videoPoster { width: 100%; max-width: 300px; border-radius: 8px; margin-bottom: 15px; display: none; }
     </style>
 </head>
 <body>
 
     <h2>🎬 Smile Video Player</h2>
-    <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပြီး ကြော်ငြာကို စောင့်ဆိုင်းပါ</p>
+    
+    <!-- ဗီဒီယိုခေါင်းစဉ် -->
+    <div id="videoTitle" class="video-title">📌 တင်ထားသော ဗီဒီယို</div>
+
+    <!-- ဗီဒီယိုပုံ (Thumbnail) ပေါ်မည့်နေရာ -->
+    <img id="videoPoster" src="" alt="Video Thumbnail">
+
+    <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပြီး ၁၅ စက္ကန့် စောင့်ဆိုင်းပါ</p>
 
     <div style="margin: 20px 0;">
         <button id="adBtn" onclick="openAdAndStartTimer()" class="btn">🔗 ကြော်ငြာဖွင့်ရန် နှိပ်ပါ</button>
     </div>
 
-    <!-- စက္ကန့်ရေတွက်မည့် နေရာ -->
     <div id="timer-container" style="display: none;">
-        <p id="timer-text">⏳ ကြော်ငြာကြည့်ရှုနေသည်... (20 စက္ကန့်)</p>
+        <p id="timer-text">⏳ ကြော်ငြာကြည့်ရှုနေသည်... (15 စက္ကန့်)</p>
     </div>
 
     <div id="videoBox" class="video-box">
-        <p class="unlock-note">✅ အချိန်ပြည့်သွားပါပြီ။ အောက်တွင် ဗီဒီယိုကို ကြည့်ရှုနိုင်ပါပြီ။</p>
+        <p class="unlock-note">✅ အချိန်ပြည့်သွားပါပြီ။ ဗီဒီယို စတင်နေပါပြီ...</p>
         <video id="videoPlayer" controls autoplay>
             Your browser does not support the video tag.
         </video>
@@ -38,6 +45,20 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = urlParams.get('v');
+        const caption = urlParams.get('caption');
+        const posterUrl = urlParams.get('thumb'); // ဗီဒီယိုပုံကို ဖမ်းယူရန်
+
+        // စာသား ရှိလျှင် ပြရန်
+        if (caption) {
+            document.getElementById('videoTitle').innerText = "📌 " + decodeURIComponent(caption);
+        }
+
+        // ဗီဒီယိုပုံ ရှိလျှင် ပေါ်လာစေရန်
+        if (posterUrl) {
+            const posterImg = document.getElementById('videoPoster');
+            posterImg.src = decodeURIComponent(posterUrl);
+            posterImg.style.display = 'inline-block';
+        }
 
         const adLinks = [
             "https://www.profitableratecpmnetwork.com/awvebhi3?key=c75d0b00b2d132a7844f91d41151f465",
@@ -45,7 +66,6 @@
         ];
 
         function openAdAndStartTimer() {
-            // ၁။ ကြော်ငြာလင့်ခ် အလှည့်ကျ ဖွင့်ရန်
             let currentIndex = localStorage.getItem('ad_index') ? parseInt(localStorage.getItem('ad_index')) : 0;
             let selectedAd = adLinks[currentIndex];
             currentIndex = (currentIndex + 1) % adLinks.length;
@@ -53,11 +73,10 @@
 
             window.open(selectedAd, '_blank');
 
-            // ၂။ ခလုတ်ကို ပိတ်ပြီး Timer စတင်ရန်
             document.getElementById('adBtn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
 
-            let timeLeft = 20; // စက္ကန့် ၂၀
+            let timeLeft = 15; // ၁၅ စက္ကန့်သို့ ပြောင်းထားသည်
             let timerElem = document.getElementById('timer-text');
 
             let countdown = setInterval(function() {
@@ -68,13 +87,14 @@
                     clearInterval(countdown);
                     document.getElementById('timer-container').style.display = 'none';
                     
-                    // ၃. အချိန်ပြည့်ပါက ဗီဒီယို Player ကို ပေါ်လာစေရန်
+                    // ၁၅ စက္ကန့်ပြည့်ပါက ဗီဒီယို တန်းပွင့်ပြီး Auto Play ဖြစ်စေရန်
                     const videoBox = document.getElementById('videoBox');
                     const videoPlayer = document.getElementById('videoPlayer');
 
                     if (videoUrl) {
                         videoBox.style.display = 'block';
                         videoPlayer.src = videoUrl;
+                        videoPlayer.play().catch(e => console.log("Auto-play blocked:", e));
                     } else {
                         videoBox.style.display = 'block';
                         alert('ဗီဒီယို လင့်ခ် အချက်အလက် မရှိပါ။');
