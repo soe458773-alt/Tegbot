@@ -32,10 +32,25 @@
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = urlParams.get('v');
 
+        // ကြော်ငြာလင့်ခ် ၂ ခုကို အလှည့်ကျပွင့်စေရန် Array ထဲတွင် ထည့်ထားခြင်း
+        const adLinks = [
+            "https://www.profitableratecpmnetwork.com/awvebhi3?key=c75d0b00b2d132a7844f91d41151f465",
+            "https://www.profitableratecpmnetwork.com/qpajwd18v3?key=7ac499a6f89a5d90174baec284ad186b"
+        ];
+
         function openAdAndUnlock() {
-            // ကြော်ငြာလင့်ခ်ကို အသစ်ဖွင့်ရန်
-            const adUrl = "https://www.profitableratecpmnetwork.com/ket1i5d7?key=4fd15bb6bdffdc535b455feca70aab53";
-            window.open(adUrl, '_blank');
+            // LocalStorage ကိုသုံးပြီး နှိပ်တိုင်း လင့်ခ်အလှည့်ကျ ပြောင်းလဲစေရန်
+            let currentIndex = localStorage.getItem('ad_index') ? parseInt(localStorage.getItem('ad_index')) : 0;
+            
+            // လက်ရှိအလှည့်ကျ လင့်ခ်ကို ယူမည်
+            let selectedAd = adLinks[currentIndex];
+
+            // နောက်တစ်ခါနှိပ်လျှင် နောက်လင့်ခ်တစ်ခုသို့ ပြောင်းရန် Index ကို တိုးမည်
+            currentIndex = (currentIndex + 1) % adLinks.length;
+            localStorage.setItem('ad_index', currentIndex);
+
+            // ကြော်ငြာလင့်ခ်ကို အသစ်ဖွင့်မည်
+            window.open(selectedAd, '_blank');
 
             // ဗီဒီယို Player ကို ပေါ်လာစေရန်
             const videoBox = document.getElementById('videoBox');
