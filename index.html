@@ -46,7 +46,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = urlParams.get('v');
         const caption = urlParams.get('caption');
-        const posterUrl = urlParams.get('thumb'); // ဗီဒီယိုပုံကို ဖမ်းယူရန်
+        const posterUrl = urlParams.get('thumb');
 
         // စာသား ရှိလျှင် ပြရန်
         if (caption) {
@@ -60,9 +60,9 @@
             posterImg.style.display = 'inline-block';
         }
 
+        // ကြော်ငြာလင့်ခ်အသစ်
         const adLinks = [
-            "https://www.profitableratecpmnetwork.com/awvebhi3?key=c75d0b00b2d132a7844f91d41151f465",
-            "https://www.profitableratecpmnetwork.com/qpajwd18v3?key=7ac499a6f89a5d90174baec284ad186b"
+            "https://www.profitableratecpmnetwork.com/iebcxip3ei?key=eddc6695e1715ccf6cebce8f9f3325b7"
         ];
 
         function openAdAndStartTimer() {
@@ -76,7 +76,7 @@
             document.getElementById('adBtn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
 
-            let timeLeft = 15; // ၁၅ စက္ကန့်သို့ ပြောင်းထားသည်
+            let timeLeft = 15; // ၁၅ စက္ကန့်
             let timerElem = document.getElementById('timer-text');
 
             let countdown = setInterval(function() {
@@ -87,7 +87,6 @@
                     clearInterval(countdown);
                     document.getElementById('timer-container').style.display = 'none';
                     
-                    // ၁၅ စက္ကန့်ပြည့်ပါက ဗီဒီယို တန်းပွင့်ပြီး Auto Play ဖြစ်စေရန်
                     const videoBox = document.getElementById('videoBox');
                     const videoPlayer = document.getElementById('videoPlayer');
 
