@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Video - Watch Ad to View</title>
     
-    <!-- HilltopAds Website Verification Meta Tag -->
-    <meta name="f7544092536d2ba68a24b78243f9e81f99c3f914" content="f7544092536d2ba68a24b78243f9e81f99c3f914" />
+    <!-- Monetag SDK Script -->
+    <script src="https://alwingulla.com/88/tag.min.js" data-zone="YOUR_ZONE_ID" async data-cfasync="false"></script>
 
     <style>
         body { font-family: Arial, sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; }
@@ -58,19 +58,11 @@
             posterImg.style.display = 'inline-block';
         }
 
-        const adLinks = [
-            "https://www.profitableratecpmnetwork.com/iebcxip3ei?key=eddc6695e1715ccf6cebce8f9f3325b7"
-        ];
-
-        function openIdAndStartTimer() {} // dummy
-
         function openAdAndStartTimer() {
-            let currentIndex = localStorage.getItem('ad_index') ? parseInt(localStorage.getItem('ad_index')) : 0;
-            let selectedAd = adLinks[currentIndex];
-            currentIndex = (currentIndex + 1) % adLinks.length;
-            localStorage.setItem('ad_index', currentIndex);
-
-            window.open(selectedAd, '_blank');
+            // Monetag click integration
+            if (typeof show_8883656 === 'function') {
+                show_8883656();
+            }
 
             document.getElementById('adBtn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
