@@ -23,12 +23,8 @@
 
     <h2>🎬 Smile Video Player</h2>
     
-    <!-- ဗီဒီယိုခေါင်းစဉ် -->
     <div id="videoTitle" class="video-title">📌 တင်ထားသော ဗီဒီယို</div>
-
-    <!-- ဗီဒီယိုပုံ (Thumbnail) ပေါ်မည့်နေရာ -->
     <img id="videoPoster" src="" alt="Video Thumbnail">
-
     <p>ဗီဒီယိုကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပြီး ၁၅ စက္ကန့် စောင့်ဆိုင်းပါ</p>
 
     <div style="margin: 20px 0;">
@@ -52,22 +48,21 @@
         const caption = urlParams.get('caption');
         const posterUrl = urlParams.get('thumb');
 
-        // စာသား ရှိလျှင် ပြရန်
         if (caption) {
             document.getElementById('videoTitle').innerText = "📌 " + decodeURIComponent(caption);
         }
 
-        // ဗီဒီယိုပုံ ရှိလျှင် ပေါ်လာစေရန်
         if (posterUrl) {
             const posterImg = document.getElementById('videoPoster');
             posterImg.src = decodeURIComponent(posterUrl);
             posterImg.style.display = 'inline-block';
         }
 
-        // ကြော်ငြာလင့်ခ်အသစ်
         const adLinks = [
             "https://www.profitableratecpmnetwork.com/iebcxip3ei?key=eddc6695e1715ccf6cebce8f9f3325b7"
         ];
+
+        function openIdAndStartTimer() {} // dummy
 
         function openAdAndStartTimer() {
             let currentIndex = localStorage.getItem('ad_index') ? parseInt(localStorage.getItem('ad_index')) : 0;
@@ -80,7 +75,7 @@
             document.getElementById('adBtn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
 
-            let timeLeft = 15; // ၁၅ စက္ကန့်
+            let timeLeft = 15;
             let timerElem = document.getElementById('timer-text');
 
             let countdown = setInterval(function() {
