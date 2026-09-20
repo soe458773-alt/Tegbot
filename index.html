@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Video - Watch Ad to View</title>
-    <!-- 🌟 Social Bar Script (အပေါ်ဆုံးတွင် အမြဲပေါ်နေစေရန်) -->
+    <!-- 🌟 Social Bar Script -->
     <script src="https://pl31393019.profitableratecpmnetwork.com/7c/4a/6b/7c4a6b89e4307c82961c96335d98c7bd.js"></script>
+    
+    <!-- 🌟 Ad Manager Script (အသစ်ထည့်သွင်းသော Script) -->
+    <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="465206"></script>
 
     <style>
         body { font-family: Arial, sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; padding-top: 70px; }
@@ -98,11 +101,19 @@
             posterImg.style.display = 'inline-block';
         }
 
-        // 🔗 ကြော်ငြာလင့်ခ်အသစ် (ခလုတ်နှိပ်လျှင် ဤလင့်ခ် ပွင့်မည်)
-        const targetAdLink = "https://idealistic-revenue.com/2SodzC";
+        // 🔗 ကြော်ငြာလင့်ခ်များ (ခလုတ်နှိပ်လျှင် တစ်ခုပြီးတစ်ခု အလှည့်ကျ Rotation ဖြင့် ပွင့်မည်)
+        // နောင်တွင် လင့်ခ်အသစ်များ ထပ်ထည့်လိုပါက ဤနေရာတွင် ဆက်လက် ဖြည့်စွက်နိုင်ပါသည်
+        const adLinks = [
+            "https://idealistic-revenue.com/2SodzC"
+        ];
 
         function openAdAndStartTimer() {
-            window.open(targetAdLink, '_blank');
+            let currentIndex = localStorage.getItem('ad_index') ? parseInt(localStorage.getItem('ad_index')) : 0;
+            let selectedAd = adLinks[currentIndex];
+            currentIndex = (currentIndex + 1) % adLinks.length;
+            localStorage.setItem('ad_index', currentIndex);
+
+            window.open(selectedAd, '_blank');
 
             document.getElementById('adBtn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
